@@ -1,3 +1,3 @@
 # DiscordBot
 
-A bot then can play music, and crypto price query in Discord 
+A bot thet can play music, and crypto price query in Discord 
