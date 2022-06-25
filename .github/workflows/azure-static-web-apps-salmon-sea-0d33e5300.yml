@@ -19,15 +19,15 @@ jobs:
         with:
           submodules: true
       - name: Build And Deploy
+        env:
+          BOTTOKEN: ${{ secrets.BOTTOKEN }}
+          CMKAPIKEY: ${{ secrets.CMKAPIKEY }}
+          TENORKEY: ${{ secrets.TENORKEY }}
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_SEA_0D33E5300 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          
-          BOTTOKEN: ${{ secrets.BOTTOKEN }}
-          CMKAPIKEY: ${{ secrets.CMKAPIKEY }}
-          TENORKEY: ${{ secrets.TENORKEY }}
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
@@ -35,15 +35,7 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-      - name: dotenv-linter
-        # You may pin to the exact commit or the version.
-        # uses: wemake-services/dotenv-linter@657012189ddab519d852588f549d20d1668309d7
-        uses: wemake-services/dotenv-linter@0.3.0
-        with:
-          BOTTOKEN: ${{ secrets.BOTTOKEN }}
-          CMKAPIKEY: ${{ secrets.CMKAPIKEY }}
-          TENORKEY: ${{ secrets.TENORKEY }}
-
+          
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
