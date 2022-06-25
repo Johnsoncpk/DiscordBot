@@ -23,6 +23,8 @@
   },
   "scripts": {
     "start": "node index.js",
+    "build": "node index.js",
+    "eject": "react-scripts eject",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
