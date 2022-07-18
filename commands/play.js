@@ -80,7 +80,7 @@ module.exports = {
                         video_player(message.guild, queue_constructor.songs[0]);
                     } catch (err) {
                         queue.delete(message.guild.id);
-                        message.channel.send('有内鬼，終止運作!');
+                        message.channel.send('有内鬼，終止交易!');
                         throw err;
                     }
                 } else {
@@ -109,8 +109,8 @@ module.exports = {
     }
 
 }
-const insertSong = async (message, song, position)=> {
-    try{
+const insertSong = async (message, song, position) => {
+    try {
         const server_queue = queue.get(message.guild.id);
         if (!message.member.voice.channel) return message.channel.send('你要加入左語音頻道先得㗎');
         if (!server_queue) {
@@ -119,25 +119,25 @@ const insertSong = async (message, song, position)=> {
         if (ytdl.validateURL(song)) {
             const song_info = await ytdl.getInfo(song);
             song = { title: song_info.videoDetails.title, url: song_info.videoDetails.video_url }
-            if(song){
-                if(position < 1){
+            if (song) {
+                if (position < 1) {
                     position = 1;
                 }
-                else if(position > server_queue.songs.length){
+                else if (position > server_queue.songs.length) {
                     return server_queue.songs.push(song);
                 }
                 server_queue.songs.splice(position, 0, song);
                 return await message.channel.send(`👍幫你放左**${song.title}**去第${position}首啦`);
-            }else{
+            } else {
                 return await message.channel.send('Sorry, 穩唔到條片.');
             }
-        }else {
-           return await message.channel.send('Sorry, 目前插歌只支援youtube link');
+        } else {
+            return await message.channel.send('Sorry, 目前插歌只支援youtube link');
         }
-    }catch{
+    } catch {
         console.log("114", e);
         return await message.channel.send('Sorry, 有error');
-    }        
+    }
 }
 
 const addListSongsToQueue = async (message, playlistID, server_queue) => {
@@ -220,22 +220,22 @@ const show_songs = async (message, server_queue) => {
             songs = server_queue.songs;
             if (songs.length > 8) {
                 for (var i = 0; i < 8; i++) {
-                    if(i==0){
+                    if (i == 0) {
                         song += `${i + 1}. (現正播放)🎶 **${songs[i].title}**\n`;
-                    }else{
+                    } else {
                         song += `${i + 1}. 🎶 **${songs[i].title}**\n`;
                     }
                 }
             } else {
                 for (var i = 0; i < songs.length; i++) {
-                    if(i==0){
+                    if (i == 0) {
                         song += `${i + 1}. (現正播放)🎶 **${songs[i].title}**\n`;
-                    }else{
+                    } else {
                         song += `${i + 1}. 🎶 **${songs[i].title}**\n`;
                     }
                 }
             }
-            if(song != ""){
+            if (song != "") {
                 return await message.channel.send(song);
             }
         }
@@ -276,7 +276,7 @@ const video_player = async (guild, song) => {
             queue.delete(guild.id);
             return;
         }
-        if(song_queue){
+        if (song_queue) {
             await song_queue.voice_channel.join();
             const stream = await ytdl(song.url);
             song_queue.connection.play(stream, { type: 'opus' })
